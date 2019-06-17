@@ -47,7 +47,7 @@ server.put('/:id/', (req, res) => {
         if(data) {
             res.json(data);
         } else {
-            res.status(404).json({ error: 'Unable to updated account data.' })
+            res.status(404).json({ error: 'Incorrect account ID.' })
         }
     })
     .catch(error => {
@@ -57,8 +57,20 @@ server.put('/:id/', (req, res) => {
 })
 
 // DELETE/DESTROY - remove an item
-server.delete('/', (req, res) => {
+server.delete('/:id/', (req, res) => {
+    const { id } = req.params;
 
+    accounts.remove(id)
+    .then(id => {
+        if (id) {
+            res.json(id);
+        } else {
+            res.status(404).json({ message: 'The account with the specified ID does not exist.' })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ error: 'The account could not be removed.' })
+    })
 })
 
 
