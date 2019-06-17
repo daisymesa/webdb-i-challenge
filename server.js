@@ -10,6 +10,8 @@ server.get('/', (req,res) => {
     `)
 })
 
+const accounts = require('./data/accounts-model.js');
+
 //////////////////// CRUD Endpoints ////////////////////
 
 // CREATE - add a new item
