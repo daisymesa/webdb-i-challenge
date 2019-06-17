@@ -10,13 +10,16 @@ server.get('/', (req, res) => {
     `)
 })
 
+server.use(express.json());
+
 const accounts = require('./data/accounts-model.js');
 
 //////////////////// CRUD Endpoints ////////////////////
 
 // CREATE - add a new item
-server.post('/', (req, res) => {
+server.post('/newaccount/', (req, res) => {
     const newAccount = { name: req.body.name, budget: req.body.budget };
+
     accounts.add(newAccount)
     .then(data => {
         res.status(201).json(data);
@@ -73,5 +76,9 @@ server.delete('/:id/', (req, res) => {
     })
 })
 
+// READ - find account by ID
+server.get('/:id/', (req, res) => {
+
+})
 
 module.exports = server;
