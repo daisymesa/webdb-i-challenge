@@ -30,7 +30,7 @@ server.post('/newaccount/', (req, res) => {
 })
 
 // READ - send a list back of all items
-server.get('/', (req, res) => {
+server.get('/accounts/', (req, res) => {
     accounts.find()
         .then(data => {
             res.json(data);
@@ -78,7 +78,19 @@ server.delete('/:id/', (req, res) => {
 
 // READ - find account by ID
 server.get('/:id/', (req, res) => {
+    const { id } = req.params;
 
+    accounts.findById(id)
+    .then(id => {
+        if (id) {
+            res.json(id);
+        } else {
+            res.status(404).json({ message: 'The account with the specified ID does not exist.' })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ error: 'The account could not be retrieved.' })
+    })
 })
 
 module.exports = server;
